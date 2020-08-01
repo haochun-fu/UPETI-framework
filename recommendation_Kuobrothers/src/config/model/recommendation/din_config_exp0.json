@@ -1,0 +1,167 @@
+{
+  "model": {
+    "module": "din_wrapper",
+    "class": "DINWrapper",
+    "param": {
+      "model": {
+        "dnn_use_bn": false,
+        "dnn_hidden_units": [200, 80],
+        "dnn_activation": "relu",
+        "att_hidden_size": [80, 40],
+        "att_activation": "dice",
+        "att_weight_normalization": false,
+        "l2_reg_dnn": 0,
+        "l2_reg_embedding": 0.000001,
+        "dnn_dropout": 0,
+        "init_std": 0.0001,
+        "seed": 0,
+        "task": "binary"
+      },
+      "compile": {
+        "optimizer": {
+          "name": "adam",
+          "param": {
+            "lr": 0.001,
+            "beta_1": 0.9,
+            "beta_2": 0.999,
+            "epsilon": null,
+            "decay": 0.0,
+            "amsgrad": false
+          }
+        },
+        "loss": "binary_crossentropy",
+        "metrics": ["binary_crossentropy"]
+      },
+      "fit": {
+        "batch_size": 32,
+        "epochs": 10,
+        "verbose": 2
+      }
+    }
+  },
+  "data": {
+    "label": {
+      "action": ["convert", "pageview", "favorite"]
+    },
+    "duration": 28,
+    "feature": {
+      "user": {
+        "deepctr": {
+          "type": "sparse",
+          "param": {
+            "name": "user",
+            "vocabulary_size": "auto",
+            "embedding_dim": 64,
+            "use_hash": false,
+            "dtype": "int32",
+            "embedding_name": null
+          }
+        } 
+      },
+      "item": {
+        "deepctr": {
+          "type": "sparse",
+          "param": {
+            "name": "item",
+            "vocabulary_size": "auto",
+            "embedding_dim": 64,
+            "use_hash": false,
+            "dtype": "int32",
+            "embedding_name": null
+          }
+        }
+      },
+      "hist_item": {
+        "deepctr": {
+          "type": "sparse_var_len",
+          "param": {
+            "sparsefeat": {
+              "name": "hist_item",
+              "vocabulary_size": "auto",
+              "embedding_dim": 64,
+              "use_hash": false,
+              "dtype": "int32",
+              "embedding_name": "item"
+            },
+            "combiner": "mean",
+            "length_name": null,
+            "weight_norm": true
+          }
+        }
+      },
+      "negative_sample_amount": 1,
+      "target": [
+        {
+          "feature_name": "action",
+          "duration": 7,
+          "action_weight": {
+            "general": {
+              "convert": 1,
+              "favorite": 0,
+              "pageview": 0
+            },
+            "ref_search": {
+              "convert": 0,
+              "favorite": 0,
+              "pageview": 0
+            }
+          },
+          "time_weight": {
+            "name": "decrease_by_day"
+          },
+          "deepctr": {
+            "type": "dense",
+            "param": {
+              "name": "item_action_1",
+              "dimension": 1
+            }
+          }
+        },
+        {
+          "feature_name": "product_info",
+          "name": "category",
+          "amount": 1,
+          "encoding": "label",
+          "deepctr": {
+            "type": "sparse",
+            "param": {
+              "name": "item_product_info_category",
+              "vocabulary_size": "auto+1",
+              "embedding_dim": 64,
+              "use_hash": false,
+              "dtype": "int32",
+              "embedding_name": null
+            }
+          }
+        }
+      ],
+      "history": {
+        "amount": 10,
+        "features": [
+          {
+            "feature_name": "product_info",
+            "name": "category",
+            "amount": 1,
+            "encoding": "label",
+            "deepctr": {
+              "type": "sparse_var_len",
+              "param": {
+                "sparsefeat": {
+                  "name": "hist_item_product_info_category",
+                  "vocabulary_size": "auto+1",
+                  "embedding_dim": 64,
+                  "use_hash": false,
+                  "dtype": "int32",
+                  "embedding_name": "item_product_info_category"
+                },
+                "combiner": "mean",
+                "length_name": null,
+                "weight_norm": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

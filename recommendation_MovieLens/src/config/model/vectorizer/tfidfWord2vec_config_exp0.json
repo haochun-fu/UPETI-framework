@@ -1,0 +1,20 @@
+{
+  "size": 100,
+  "window": 5,
+  "min_count": 5,
+  "workers": 1,
+  "sg": 0,
+  "hs": 0,
+  "negative": 5,
+  "ns_exponent": 0.75,
+  "cbow_mean": 1,
+  "alpha": 0.025,
+  "min_alpha": 0.0001,
+  "seed": 1,
+  "max_vocab_size": null,
+  "max_final_vocab": null,
+  "sample": 0.001,
+  "iter": 5,
+  "sorted_vocab": 1,
+  "batch_words": 10000
+}

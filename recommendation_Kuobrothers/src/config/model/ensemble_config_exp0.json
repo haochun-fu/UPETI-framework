@@ -1,0 +1,20 @@
+{
+  "models": [
+    {
+      "name": "lightfm",
+      "exp": "exp60"
+    },
+    {
+      "name": "lightfm",
+      "exp": "exp51"
+    },
+    {
+      "name": "lightfm",
+      "exp": "exp67"
+    },
+    {
+      "name": "lightfm",
+      "exp": "exp52"
+    }
+  ]
+}

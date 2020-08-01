@@ -1,0 +1,53 @@
+{
+  "model": {
+    "module": "lightfm_interaction_difference_ensembler_wrapper",
+    "class": "LightFMInteractionDifferenceEnsemblerWrapper",
+    "param": {
+      "split_model": {
+        "model": {
+          "no_components": 200,
+          "k": 5,
+          "n": 10,
+          "learning_schedule": "adagrad",
+          "loss": "warp",
+          "learning_rate": 0.05,
+          "rho": 0.95,
+          "epsilon": 0.000001,
+          "item_alpha": 0.0,
+          "user_alpha": 0.0,
+          "max_sampled": 40,
+          "random_state": 0
+        },
+        "fit": {
+          "epochs": 100,
+          "num_threads": 1
+        }
+      }
+    }
+  },
+  "data": {
+    "label": {
+      "rating_lower_bound": 0,
+      "time_weight": {
+        "name": "decrease_by_day",
+        "is_use_first_decay": false
+      }
+    },
+    "duration": 28,
+    "item": {
+      "vector": {
+        "model": "tfidfWord2vec",
+        "exp_no": 1,
+        "normalization": "",
+        "scale" : 1
+      },
+      "genres": false,
+      "genome_tags": {
+        "relevance_lower_bound": 0.9
+      }
+    },
+    "interaction_difference": {
+      "split": 2
+    }
+  }
+}

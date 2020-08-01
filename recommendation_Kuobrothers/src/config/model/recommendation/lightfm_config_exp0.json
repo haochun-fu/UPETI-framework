@@ -1,0 +1,60 @@
+{
+  "model": {
+    "module": "lightfm_wrapper",
+    "class": "LightFMWrapper",
+    "param": {
+      "model": {
+        "no_components": 400,
+        "k": 5,
+        "n": 10,
+        "learning_schedule": "adagrad",
+        "loss": "warp",
+        "learning_rate": 0.05,
+        "rho": 0.95,
+        "epsilon": 0.000001,
+        "item_alpha": 0.0,
+        "user_alpha": 0.0,
+        "max_sampled": 40,
+        "random_state": 0
+      },
+      "fit": {
+        "epochs": 100,
+        "num_threads": 1
+      }
+    }
+  },
+  "data": {
+    "label": {
+      "action_weight": {
+        "general": {
+          "convert": 50,
+          "favorite": 700,
+          "pageview": 50
+        },
+        "ref_search": {
+          "convert": 500,
+          "favorite": 1,
+          "pageview": 200
+        }
+      },
+      "time_weight": {
+        "name": "decrease_by_day",
+        "is_use_first_decay": false
+      }
+    },
+    "duration": 28,
+    "product_vector": {
+      "model": "tfidfWord2vec",
+      "size": 64,
+      "normalization": "",
+      "field": ["name", "desc_short"],
+      "field_operation": "concatenate",
+      "scale" : 1
+    },
+    "product_info": {
+      "category": -1,
+      "keyword": -1,
+      "tag": -1
+    }
+  }
+}

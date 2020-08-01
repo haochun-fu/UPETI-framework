@@ -1,0 +1,61 @@
+{
+  "model": {
+    "module": "content_wmf_interaction_difference_ensembler_wrapper",
+    "class": "ContentWMFInteractionDifferenceEnsemblerWrapper",
+    "param": {
+      "split_model": {
+        "model": {
+          "num_factors": 50,
+          "lambda_V_reg": 0.01,
+          "lambda_U_reg": 0.01,
+          "lambda_W_reg": 0.01,
+          "init_std": 0.01,
+          "beta": 0.01,
+          "num_iters": 10,
+          "batch_size": 10000,
+          "random_state": 98765,
+          "dtype": "float64",
+          "n_jobs": 4
+        }
+      }
+    }
+  },
+  "data": {
+    "label": {
+      "action_weight": {
+        "general": {
+          "convert": 50,
+          "favorite": 700,
+          "pageview": 50
+        },
+        "ref_search": {
+          "convert": 500,
+          "favorite": 1,
+          "pageview": 200
+        }
+      },
+      "time_weight": {
+        "name": "decrease_by_day",
+        "is_use_first_decay": false
+      }
+    },
+    "duration": 28,
+    "product_vector": {
+      "model": "tfidfWord2vec",
+      "size": 64,
+      "normalization": "",
+      "field": ["name", "desc_short"],
+      "field_operation": "concatenate",
+      "scale" : 1
+    },
+    "feature": {
+      "log": {
+        "alpha": 0.4,
+        "epsilon": 0.00000001
+      }
+    },
+    "interaction_difference": {
+      "split": 2
+    }
+  }
+}

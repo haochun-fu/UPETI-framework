@@ -1,0 +1,169 @@
+{
+  "model": {
+    "module": "din_interaction_difference_ensembler_wrapper",
+    "class": "DINInteractionDifferenceEnsemblerWrapper",
+    "param": {
+      "split_model": {
+        "model": {
+          "dnn_use_bn": false,
+          "dnn_hidden_units": [200, 80],
+          "dnn_activation": "relu",
+          "att_hidden_size": [80, 40],
+          "att_activation": "dice",
+          "att_weight_normalization": false,
+          "l2_reg_dnn": 0,
+          "l2_reg_embedding": 0.000001,
+          "dnn_dropout": 0,
+          "seed": 0,
+          "task": "binary"
+        },
+        "compile": {
+          "optimizer": {
+            "name": "adam",
+            "param": {
+              "lr": 0.001,
+              "beta_1": 0.9,
+              "beta_2": 0.999,
+              "epsilon": null,
+              "decay": 0.0,
+              "amsgrad": false
+            }
+          },
+          "loss": "binary_crossentropy",
+          "metrics": ["binary_crossentropy"]
+        },
+        "fit": {
+          "batch_size": 32,
+          "epochs": 10,
+          "verbose": 2
+        }
+      }
+    }
+  },
+  "data": {
+    "duration": 28,
+    "feature": {
+      "user": {
+        "deepctr": {
+          "type": "sparse",
+          "param": {
+            "name": "user",
+            "vocabulary_size": "auto",
+            "embedding_dim": 64,
+            "use_hash": false,
+            "dtype": "int32",
+            "embedding_name": null
+          }
+        } 
+      },
+      "item": {
+        "deepctr": {
+          "type": "sparse",
+          "param": {
+            "name": "item",
+            "vocabulary_size": "auto",
+            "embedding_dim": 64,
+            "use_hash": false,
+            "dtype": "int32",
+            "embedding_name": null
+          }
+        }
+      },
+      "hist_item": {
+        "deepctr": {
+          "type": "sparse_var_len",
+          "param": {
+            "sparsefeat": {
+              "name": "hist_item",
+              "vocabulary_size": "auto",
+              "embedding_dim": 64,
+              "use_hash": false,
+              "dtype": "int32",
+              "embedding_name": "item"
+            },
+            "combiner": "mean",
+            "length_name": null,
+            "weight_norm": true
+          }
+        }
+      },
+      "negative_sample_amount": 1,
+      "target": [
+        {
+          "feature_name": "item_info_genres",
+          "deepctr": {
+            "type": "sparse",
+            "param": {
+              "name": "item_info_genres",
+              "vocabulary_size": "auto",
+              "embedding_dim": 64,
+              "use_hash": false,
+              "dtype": "int32",
+              "embedding_name": null
+            }
+          }
+        },
+        {
+          "feature_name": "item_info_genome_tags",
+          "deepctr": {
+            "type": "sparse",
+            "param": {
+              "name": "item_info_genome_tags",
+              "vocabulary_size": "auto",
+              "embedding_dim": 64,
+              "use_hash": false,
+              "dtype": "int32",
+              "embedding_name": null
+            }
+          }
+        }
+      ],
+      "history": {
+        "amount": 10,
+        "features": [
+          {
+            "feature_name": "item_info_genres",
+            "deepctr": {
+              "type": "sparse_var_len",
+              "param": {
+                "sparsefeat": {
+                  "name": "hist_item_info_genres",
+                  "vocabulary_size": "auto",
+                  "embedding_dim": 64,
+                  "use_hash": false,
+                  "dtype": "int32",
+                  "embedding_name": "item_info_genres"
+                },
+                "combiner": "mean",
+                "length_name": null,
+                "weight_norm": true
+              }
+            }
+          },
+          {
+            "feature_name": "item_info_genome_tags",
+            "deepctr": {
+              "type": "sparse_var_len",
+              "param": {
+                "sparsefeat": {
+                  "name": "hist_item_info_genome_tags",
+                  "vocabulary_size": "auto",
+                  "embedding_dim": 64,
+                  "use_hash": false,
+                  "dtype": "int32",
+                  "embedding_name": "item_info_genome_tags"
+                },
+                "combiner": "mean",
+                "length_name": null,
+                "weight_norm": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    "interaction_difference": {
+      "split": 2
+    }
+  }
+}
