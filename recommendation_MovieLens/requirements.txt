@@ -40,7 +40,7 @@ tensorflow-estimator==1.15.1
 tensorflow-gpu==1.15.0
 termcolor==1.1.0
 tqdm==4.41.0
-urllib3==1.25.6
+urllib3==1.26.5
 Werkzeug==0.16.0
 wrapt==1.11.2
 zhon==1.1.5
