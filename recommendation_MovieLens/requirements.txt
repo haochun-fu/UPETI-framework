@@ -3,7 +3,7 @@ astor==0.8.1
 boto==2.49.0
 boto3==1.10.4
 botocore==1.13.4
-certifi==2019.9.11
+certifi==2022.12.7
 chardet==3.0.4
 ckiptagger==0.1.0
 deepctr==0.8.0
